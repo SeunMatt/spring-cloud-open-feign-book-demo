@@ -1,0 +1,31 @@
+version: '3.7'
+services:
+
+  demodiscovery:
+    build:
+      context: .
+      dockerfile: demodiscovery_dockerfile
+    ports:
+      - "8761:8761"
+    expose:
+      - 8761
+    networks:
+      - demo-applications
+
+  demoserver:
+    build:
+      context: .
+      dockerfile: demoserver_dockerfile
+    depends_on:
+      - demodiscovery
+    ports:
+      - "9000:9000"
+    expose:
+      - 9000
+    networks:
+      - demo-applications
+    environment:
+      DISCOVERY_SERVER_URL: "http://demodiscovery:8761/eureka/"
+
+networks:
+  demo-applications:

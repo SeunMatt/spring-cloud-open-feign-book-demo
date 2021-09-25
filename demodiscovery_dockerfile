@@ -1,0 +1,7 @@
+FROM openjdk:11
+EXPOSE 8761
+WORKDIR .
+ADD . .
+RUN java -version
+RUN ./mvnw package -DskipTests=true -f ./demodiscovery/pom.xml
+CMD java -jar ./demodiscovery/target/demodiscovery.jar
