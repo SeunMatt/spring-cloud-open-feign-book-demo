@@ -1,10 +1,5 @@
 language: java
 jdk:
   - openjdk11
-services: docker
-before_script:
-  - ls -1a
-  - docker-compose up --build
-  - ./mvnw clean package -DskipTests=true
 script:
-  - ./mvnw clean test -f democonsumer/pom.xml
+  - ./mvnw clean package -DskipTests=true

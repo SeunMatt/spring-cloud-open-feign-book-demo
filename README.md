@@ -13,7 +13,7 @@ From the root directory of this project execute the following commands:
 - Then start the `demodiscovery` application: `java -jar ./demodiscovery/target/demodiscovery.jar`
 - Then start the `demoserver` application: `java -jar ./demoserver/target/demoserver.jar`
 
-Alternatively, you can use Docker compose to start both applications by running `docker-compose -f ./docker-compose.yml up --build` or use your favourite IDE 
+Alternatively, you can start both applications from your favourite IDE or using Docker compose by running `docker-compose -f ./docker-compose.yml up --build`
 
 ### Step 2: Run the tests
 
