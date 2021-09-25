@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Map;
 
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,6 +14,7 @@ import com.smattme.democonsumer.clients.OpenWeatherClient;
 import com.smattme.democonsumer.services.OpenWeatherService;
 
 @SpringBootTest
+@Tag("OpenWeatherIntegrationTest")
 public class OpenWeatherIntegrationTest {
 	
 	@Value("${open-weather.api-key}")
