@@ -18,4 +18,4 @@ Alternatively, you can use Docker compose to start both applications by running 
 ### Step 2: Run the tests
 
 Having starts the server, you can execute the following command from the project's root directory:
-`mvn clean test -f democonsumer/pom.xml`
+`./mvnw clean test -f democonsumer/pom.xml`
