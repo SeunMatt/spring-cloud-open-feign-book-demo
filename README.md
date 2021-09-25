@@ -1,5 +1,7 @@
 # Spring Cloud OpenFeign Book Demo
 
+[![Build Status](https://travis-ci.org/SeunMatt/mysql-backup4j.svg?branch=master)](https://travis-ci.org/SeunMatt/mysql-backup4j)
+
 This is the complete source code for the Spring Cloud OpenFeign Book
 
 # Running Tests Locally
