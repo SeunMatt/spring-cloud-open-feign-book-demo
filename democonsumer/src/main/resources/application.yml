@@ -1,0 +1,24 @@
+server:
+  port: 9001
+demoserver:
+  base-url: http://localhost:9000
+  username: user
+  password: password
+  auth-token: hAtjWRnNRU85bMGvty8XzMWQxauLCH
+  client-id: user
+  signature-secret: secret
+  aes-secret: kXp2s5v8y/B?E(H+
+logging:
+  level:
+    '[com.smattme.democonsumer]': debug
+spring:
+  application:
+    name: democonsumer    
+open-weather:
+  api-key: ${OPEN_WEATHER_API_KEY:12345}
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/

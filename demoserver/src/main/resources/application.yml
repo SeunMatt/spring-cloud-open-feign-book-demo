@@ -1,0 +1,20 @@
+server:
+  port: 9000
+logging:
+  level:
+    '[org.springframework]': debug
+    '[com.smattme.demoserver]': debug
+spring:
+  security:
+    static-api-token: hAtjWRnNRU85bMGvty8XzMWQxauLCH
+    static-signature-secret: secret
+    static-aes-key: kXp2s5v8y/B?E(H+
+  application:
+    name: demoserver  
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+         
