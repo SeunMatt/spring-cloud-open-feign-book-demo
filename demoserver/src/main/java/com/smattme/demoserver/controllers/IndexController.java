@@ -4,6 +4,7 @@ import static com.smattme.demoserver.helpers.GenericResponse.generic200Response;
 
 import java.util.Map;
 
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +30,11 @@ public class IndexController {
 	
 	@GetMapping(value = Routes.Index.INDEX, params = "query")
 	public ResponseEntity<Map<String, Object>> indexSearch(@RequestParam String query) {
+		return ResponseEntity.ok(generic200Response("Welcome to Demo Commerce API producer " + query));
+	}
+
+	@GetMapping(value = Routes.Index.INDEX, params = {"size", "page", "search"})
+	public ResponseEntity<Map<String, Object>> indexPaginateSearch(@RequestParam Map<String, String> query) {
 		return ResponseEntity.ok(generic200Response("Welcome to Demo Commerce API producer " + query));
 	}
 	

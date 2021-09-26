@@ -82,4 +82,15 @@ public class IndexClientIntegrationTest {
 		assertEquals(200, response.getCode());
 	}
 
+	@Test
+	void whenIndexPaginateSearch_thenReturnSuccessResponse() {
+		Map<String, String> queryParams = new HashMap<>();
+		queryParams.put("size", "10");
+		queryParams.put("page", "1");
+		queryParams.put("search", "John");
+		var response = indexClient.indexPaginateSearch(queryParams);
+		assertTrue(response.isStatus());
+		assertEquals(200, response.getCode());
+	}
+
 }

@@ -3,6 +3,7 @@ package com.smattme.democonsumer.clients;
 import java.util.Map;
 
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.cloud.openfeign.SpringQueryMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +23,9 @@ public interface IndexClient {
 
 	@GetMapping("/")
 	GenericClientResponse<Map<String, Object>> indexSearch(@RequestParam String query);
+
+	@GetMapping("/")
+	GenericClientResponse<Map<String, Object>> indexPaginateSearch(@SpringQueryMap Map<String, String> queryParams);
 
 	@GetMapping("/user/{id}")
 	GenericClientResponse<Map<String, Object>> indexUserDetails(@PathVariable String id);
