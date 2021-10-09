@@ -21,15 +21,15 @@ public class OpenWeatherService {
 		this.objectMapper = objectMapper;
 	}
 
-	public Map<String, Object> getCurrentWeatherData(String city, String apiKey) throws Exception {
+	public Map<String, Object> getCurrentWeatherDataForLagos(String apiKey) throws Exception {
+		String url = "https://api.openweathermap.org/data/2.5/weather?q=Lagos&appid=";
 		OkHttpClient client = new OkHttpClient().newBuilder().build();
 		Request request = new Request.Builder()
-				.url("https://api.openweathermap.org/data/2.5/weather?q=Lagos&appid=" + apiKey)
+				.url( url + apiKey)
 				.get()
 				.build();
 		Response response = client.newCall(request).execute();
-
-		TypeReference<Map<String, Object>> mapType = new TypeReference<Map<String, Object>>() {};
+		TypeReference<Map<String, Object>> mapType = new TypeReference<>() {};
 		return objectMapper.readValue(response.body().bytes(), mapType);
 	}
 

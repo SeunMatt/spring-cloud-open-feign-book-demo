@@ -28,8 +28,7 @@ public class OpenWeatherIntegrationTest {
 	
 	@Test
 	void givenCityName_whenGetWeatherDataUsingOkhttp_thenReturnCurrentWeatherData() throws Exception {
-		String city = "Lagos";
-		Map<String, Object> responseMap = openWeatherService.getCurrentWeatherData(city, apiKey);
+		Map<String, Object> responseMap = openWeatherService.getCurrentWeatherDataForLagos(apiKey);
 		assertEquals("Lagos", responseMap.get("name"));
 	}
 	
