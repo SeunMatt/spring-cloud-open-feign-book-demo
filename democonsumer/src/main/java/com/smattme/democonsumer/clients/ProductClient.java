@@ -8,7 +8,7 @@ import com.smattme.democonsumer.responses.GenericClientResponse;
 import com.smattme.democonsumer.responses.ProductsResponse;
 
 @FeignClient(name = "product-client", url = "${demoserver.base-url}",
-			configuration = BasicFeignClientConfig.class)
+	configuration = BasicFeignClientConfig.class)
 public interface ProductClient {
 	
 	@GetMapping("/core/basic/products")

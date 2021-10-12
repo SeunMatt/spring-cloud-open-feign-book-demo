@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.smattme.democonsumer.config.BasicFeignClientConfig;
 import com.smattme.democonsumer.responses.GenericClientResponse;
 
-@FeignClient(name = "order-client", url = "${demoserver.base-url}", 
-			 configuration = BasicFeignClientConfig.class)
+@FeignClient(name = "order-client", url = "${demoserver.base-url}",
+	configuration = BasicFeignClientConfig.class)
 public interface OrderClient {
 
 	@PostMapping("/core/basic/orders")
