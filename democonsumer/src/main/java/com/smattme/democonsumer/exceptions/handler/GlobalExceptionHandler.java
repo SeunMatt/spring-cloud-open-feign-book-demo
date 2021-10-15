@@ -40,11 +40,11 @@ public class GlobalExceptionHandler implements ErrorController {
 
 	public GlobalExceptionHandler() {}
 
-	@ExceptionHandler(CustomApplicationException.class)
-	public ResponseEntity<Map<String, Object>> handleThrowable(CustomApplicationException e) {
-		return ResponseEntity.status(e.getHttpStatus())
-				.body(genericErrorResponse(e.getHttpStatus(), e.getMessage(), e.getErrors(), e.getData()));
-	}
+//	@ExceptionHandler(CustomApplicationException.class)
+//	public ResponseEntity<Map<String, Object>> handleThrowable(CustomApplicationException e) {
+//		return ResponseEntity.status(e.getHttpStatus())
+//				.body(genericErrorResponse(e.getHttpStatus(), e.getMessage(), e.getErrors(), e.getData()));
+//	}
 
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<Map<String, Object>> handleInternalServerError(Exception e) {

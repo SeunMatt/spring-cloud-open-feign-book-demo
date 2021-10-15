@@ -41,35 +41,33 @@ public class CustomErrorDecoder implements ErrorDecoder {
 			// its reason phrase
 			if (Objects.isNull(response.body())) {
 				HttpStatus httpStatus = HttpStatus.valueOf(response.status());
-				return new CustomApplicationException(httpStatus, httpStatus.getReasonPhrase());
+				return new CustomApplicationException(httpStatus,
+					httpStatus.getReasonPhrase());
 			}
 
 			// read the error response body as String
 			InputStream bodyStream = response.body().asInputStream();
 			String errorJson = StreamUtils.copyToString(bodyStream, StandardCharsets.UTF_8);
 
-			// this is a Jackson Object type that aid parsing JSON string to generic Map
-			// object
-			// i.e. Map<String, Object> instead of just Map
-			TypeReference<Map<String, Object>> mapTypeReference = new TypeReference<Map<String, Object>>() {
-			};
+			// this is a Jackson Object type that aid parsing JSON string
+			// to generified Map object i.e. Map<String, Object>
+			TypeReference<Map<String, Object>> mapTypeReference = new TypeReference<>() {};
 
 			// parse the response body to a Map<String, Object> object and if something went
-			// wrong return a singleton map with
-			// the returned error as responseDescription
+			// wrong return a singleton map with the returned error as responseDescription
+			var genericResponse = GenericResponse.genericErrorResponse(HttpStatus.SERVICE_UNAVAILABLE,
+				"External service not available");
 			Map<String, Object> errorBody = Try.of(() -> objectMapper.readValue(errorJson, mapTypeReference))
-					.getOrElse(GenericResponse.genericErrorResponse(HttpStatus.SERVICE_UNAVAILABLE,
-							"External service not available"));
+				.getOrElse(genericResponse);
 
 			// return a new CustomApplicationException using the status returned by the
-			// response and
-			// the message parsed above. Even if the responseDescription is not present one
-			// way or another
-			// use a fallback message
-			String message = errorBody.getOrDefault("message", "Service not available now, please try again")
-					.toString();
+			// response and the message parsed above.
+			// If the responseDescription is not present, use a fallback message
+			String defaultMsg = "Service not available now, please try again";
+			String message = errorBody.getOrDefault("message", defaultMsg).toString();
 			List<String> errors = (List<String>) errorBody.getOrDefault("errors", Collections.singleton(message));
-			return new CustomApplicationException(HttpStatus.valueOf(response.status()), message, errors, null);
+
+			return new CustomApplicationException(HttpStatus.valueOf(response.status()), message, errors);
 
 		} catch (IOException e) {
 			logger.error("Error reading error input stream of feign: " + e.getMessage(), e);
