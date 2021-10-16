@@ -19,7 +19,8 @@ public class CardService {
 
 	public Map<String, Object> getCustomerCardDetails(String customerId) {
 
-		GenericClientResponse<Map<String, Object>> cardResponse = cardClient.getCustomerCardDetails(customerId);
+		GenericClientResponse<Map<String, Object>> cardResponse;
+		cardResponse = cardClient.getCustomerCardDetails(customerId);
 
 		Map<String, Object> finalResponse = new HashMap<>();
 		finalResponse.put("code", cardResponse.getCode());

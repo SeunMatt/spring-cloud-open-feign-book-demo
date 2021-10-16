@@ -21,9 +21,11 @@ public class CardServiceIntegrationTest {
 	void givenCustomerId_whenGetCustomerCardDetails_thenReturnSuccess() {
 
 		String customerId = "user";
-		Map<String, Object> response = cardService.getCustomerCardDetails(customerId);
+		Map<String, Object> response;
+		response = cardService.getCustomerCardDetails(customerId);
 
-		boolean status = Boolean.parseBoolean(response.get("status").toString());
+		var statusStr = response.get("status").toString();
+		boolean status = Boolean.parseBoolean(statusStr);
 		assertTrue(status);
 
 		assertEquals(200, response.get("code"));

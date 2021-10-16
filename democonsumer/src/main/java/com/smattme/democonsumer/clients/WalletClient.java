@@ -10,7 +10,7 @@ import com.smattme.democonsumer.config.HttpStatusFeignClientConfig;
 import com.smattme.democonsumer.responses.GenericClientResponse;
 
 @FeignClient(name = "wallet-client", url = "${demoserver.base-url}",
-		configuration = HttpStatusFeignClientConfig.class)
+	configuration = HttpStatusFeignClientConfig.class)
 public interface WalletClient {
 	
 	@PostMapping("/core/token/wallet/credit")

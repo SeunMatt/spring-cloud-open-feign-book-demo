@@ -1,14 +1,12 @@
 package com.smattme.democonsumer.config;
 
+import com.smattme.democonsumer.interceptors.TokenRequestInterceptor;
+import feign.Client;
+import feign.RequestInterceptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-
-import com.smattme.democonsumer.interceptors.TokenRequestInterceptor;
-
-import feign.Client;
-import feign.RequestInterceptor;
 
 public class DecryptingFeignClientConfig {
 

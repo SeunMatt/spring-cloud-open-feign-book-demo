@@ -10,7 +10,7 @@ import com.smattme.democonsumer.config.DecryptingFeignClientConfig;
 import com.smattme.democonsumer.responses.GenericClientResponse;
 
 @FeignClient(name = "card-client", url = "${demoserver.base-url}",
-		configuration = DecryptingFeignClientConfig.class)
+	configuration = DecryptingFeignClientConfig.class)
 public interface CardClient {
 	
 	@GetMapping("/core/token/cards/{customerId}")

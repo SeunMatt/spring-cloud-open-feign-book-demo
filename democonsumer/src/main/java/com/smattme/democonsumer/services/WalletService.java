@@ -3,6 +3,7 @@ package com.smattme.democonsumer.services;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.smattme.democonsumer.clients.WalletClient;
@@ -14,6 +15,7 @@ public class WalletService {
 
 	private WalletClient walletClient;
 
+	@Autowired
 	public WalletService(WalletClient walletClient) {
 		this.walletClient = walletClient;
 	}
@@ -29,7 +31,9 @@ public class WalletService {
 
 		try {
 
-			GenericClientResponse<Map<String, Object>> walletResponse = walletClient.creditCustomer(creditRequest);
+			GenericClientResponse<Map<String, Object>> walletResponse;
+			walletResponse = walletClient.creditCustomer(creditRequest);
+
 			finalResponse.put("code", walletResponse.getCode());
 			finalResponse.put("status", walletResponse.isStatus());
 			finalResponse.put("message", walletResponse.getMessage());
