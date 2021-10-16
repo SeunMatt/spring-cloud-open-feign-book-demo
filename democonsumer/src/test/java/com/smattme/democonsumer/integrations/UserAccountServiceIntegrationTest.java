@@ -24,7 +24,8 @@ public class UserAccountServiceIntegrationTest {
 		int amount = 1000;
 		Map<String, Object> response = userAccountService.debitCustomer(accountId, amount);
 
-		boolean status = Boolean.parseBoolean(response.get("status").toString());
+		var statusStr = response.get("status").toString();
+		boolean status = Boolean.parseBoolean(statusStr);
 		assertTrue(status);
 
 		assertEquals(200, response.get("code"));

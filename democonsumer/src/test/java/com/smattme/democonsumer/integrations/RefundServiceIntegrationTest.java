@@ -1,15 +1,14 @@
 package com.smattme.democonsumer.integrations;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.Map;
-
+import com.smattme.democonsumer.services.RefundService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.smattme.democonsumer.services.RefundService;
+import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 public class RefundServiceIntegrationTest {
@@ -18,11 +17,12 @@ public class RefundServiceIntegrationTest {
 	private RefundService refundService;
 
 	@Test
-	void givenRefundRequest_whenSubmitRefund_thenReturnSuccessResponse() {
+	void givenRefundRequest_whenSubmitRefund_thenReturnSuccess() {
 
 		Map<String, Object> response = refundService.submitRefundRequest();
 
-		boolean status = Boolean.parseBoolean(response.get("status").toString());
+		var statusStr = response.get("status").toString();
+		boolean status = Boolean.parseBoolean(statusStr);
 		assertTrue(status);
 
 		assertEquals(200, response.get("code"));

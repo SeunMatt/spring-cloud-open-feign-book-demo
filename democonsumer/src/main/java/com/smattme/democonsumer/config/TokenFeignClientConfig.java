@@ -16,8 +16,7 @@ public class TokenFeignClientConfig {
 
 	private static final Logger logger = LoggerFactory.getLogger(TokenFeignClientConfig.class);
 
-	public TokenFeignClientConfig() {
-	}
+	public TokenFeignClientConfig() {}
 
 	@Bean
 	public RequestInterceptor requestInterceptor() {

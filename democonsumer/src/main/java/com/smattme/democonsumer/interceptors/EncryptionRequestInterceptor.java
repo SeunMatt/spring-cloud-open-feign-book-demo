@@ -32,7 +32,8 @@ public class EncryptionRequestInterceptor implements RequestInterceptor {
 				: "";
 
 		// encrypt the request body
-		String encryptedBody = encryptDataAES(requestBody, aesSecret.getBytes());
+		byte [] secretBytes = aesSecret.getBytes();
+		String encryptedBody = encryptDataAES(requestBody, secretBytes);
 
 		// set the encrypted body as the new request body
 		template.body(encryptedBody);
@@ -62,9 +63,11 @@ public class EncryptionRequestInterceptor implements RequestInterceptor {
 			ByteBuffer byteBuffer = ByteBuffer.allocate(iv.length + cipherText.length);
 			byteBuffer.put(iv);
 			byteBuffer.put(cipherText);
+
 			// the first 12 bytes are the IV where others are the cipher message +
 			// authentication tag
 			byte[] cipherMessage = byteBuffer.array();
+
 			return Base64.getEncoder().encodeToString(cipherMessage);
 
 		} catch (Exception e) {

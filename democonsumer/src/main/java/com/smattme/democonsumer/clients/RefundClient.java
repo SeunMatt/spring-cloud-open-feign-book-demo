@@ -10,7 +10,7 @@ import com.smattme.democonsumer.config.TokenFeignClientConfig;
 import com.smattme.democonsumer.responses.GenericClientResponse;
 
 @FeignClient(name = "refund-client", url = "${demoserver.base-url}",
-			configuration = TokenFeignClientConfig.class)
+	configuration = TokenFeignClientConfig.class)
 public interface RefundClient {
 
 	@PostMapping("/core/token/refunds")

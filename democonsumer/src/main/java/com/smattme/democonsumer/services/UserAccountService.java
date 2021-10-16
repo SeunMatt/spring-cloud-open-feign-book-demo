@@ -27,6 +27,7 @@ public class UserAccountService {
 		bankDebitRequest.put("currency", "NGN");
 
 		GenericClientResponse<Map<String, Object>> bankResponse = bankClient.debitCustomer(bankDebitRequest);
+		
 
 		Map<String, Object> finalResponse = new HashMap<>();
 		finalResponse.put("code", bankResponse.getCode());

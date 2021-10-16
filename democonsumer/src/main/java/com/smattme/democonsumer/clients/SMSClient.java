@@ -10,7 +10,7 @@ import com.smattme.democonsumer.config.SignatureFeignClientConfig;
 import com.smattme.democonsumer.responses.GenericClientResponse;
 
 @FeignClient(name = "sms-client", url = "${demoserver.base-url}",
-			configuration = SignatureFeignClientConfig.class)
+	configuration = SignatureFeignClientConfig.class)
 public interface SMSClient {
 
 	@PostMapping("/core/sig/sms/send")

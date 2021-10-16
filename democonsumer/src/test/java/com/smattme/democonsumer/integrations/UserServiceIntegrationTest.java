@@ -18,11 +18,13 @@ public class UserServiceIntegrationTest {
 	private UserService userService;
 
 	@Test
-	void givenRecipient_whenSendOTP_thenReturnSuccessResponse() {
+	void givenRecipient_whenSendOTP_thenReturnSuccess() {
 
-		Map<String, Object> response = userService.sendOTP("2347011111111");
+		var to = "2347011111111";
+		Map<String, Object> response = userService.sendOTP(to);
 
-		boolean status = Boolean.parseBoolean(response.get("status").toString());
+		var statusStr = response.get("status").toString();
+		boolean status = Boolean.parseBoolean(statusStr);
 		assertTrue(status);
 
 		assertEquals(200, response.get("code"));

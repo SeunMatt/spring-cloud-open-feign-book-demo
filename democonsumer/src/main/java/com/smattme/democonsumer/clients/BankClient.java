@@ -10,7 +10,7 @@ import com.smattme.democonsumer.config.EncryptionFeignClientConfig;
 import com.smattme.democonsumer.responses.GenericClientResponse;
 
 @FeignClient(name = "bank-client", url = "${demoserver.base-url}",
-configuration = EncryptionFeignClientConfig.class)
+	configuration = EncryptionFeignClientConfig.class)
 public interface BankClient {
 	
 	
