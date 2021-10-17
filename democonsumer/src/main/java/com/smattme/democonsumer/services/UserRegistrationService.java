@@ -9,11 +9,11 @@ import com.smattme.democonsumer.clients.EmailClient;
 import com.smattme.democonsumer.responses.GenericClientResponse;
 
 @Service
-public class UserRegisterationService {
+public class UserRegistrationService {
 	
 	private EmailClient emailClient;
 
-	public UserRegisterationService(EmailClient emailClient) {
+	public UserRegistrationService(EmailClient emailClient) {
 		this.emailClient = emailClient;
 	}
 	
@@ -28,7 +28,8 @@ public class UserRegisterationService {
 		emailRequest.put("message", "Dear User, Welcome to our world");
 		emailRequest.put("sender", "DemoApp");
 
-		GenericClientResponse<Map<String, Object>> bankResponse = emailClient.sendEmail(emailRequest);
+		GenericClientResponse<Map<String, Object>> bankResponse;
+		bankResponse = emailClient.sendEmail(emailRequest);
 
 		Map<String, Object> finalResponse = new HashMap<>();
 		finalResponse.put("code", bankResponse.getCode());
@@ -39,6 +40,4 @@ public class UserRegisterationService {
 		
 	}
 	
-	
-
 }

@@ -9,20 +9,22 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.smattme.democonsumer.services.UserRegisterationService;
+import com.smattme.democonsumer.services.UserRegistrationService;
 
 @SpringBootTest
-public class UserRegisterationServiceIntegrationTest {
+public class UserRegistrationServiceIntegrationTest {
 
 	@Autowired
-	private UserRegisterationService userRegisterationService;
+	private UserRegistrationService userRegistrationService;
 
 	@Test
 	void givenUserEmail_whenRegisterNewUser_thenSendEmailSuccessfully() {
 
-		Map<String, Object> response = userRegisterationService.registerNewUser("hello@example.com");
+		var email = "hello@example.com";
+		Map<String, Object> response = userRegistrationService.registerNewUser(email);
 
-		boolean status = Boolean.parseBoolean(response.get("status").toString());
+		var statusStr = response.get("status").toString();
+		boolean status = Boolean.parseBoolean(statusStr);
 		assertTrue(status);
 
 		assertEquals(200, response.get("code"));
