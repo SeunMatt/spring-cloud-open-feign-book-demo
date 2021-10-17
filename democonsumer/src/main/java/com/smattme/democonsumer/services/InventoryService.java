@@ -6,6 +6,9 @@ import com.smattme.democonsumer.exceptions.CustomApplicationException;
 import com.smattme.democonsumer.responses.GenericClientResponse;
 import com.smattme.democonsumer.responses.ProductResponse;
 import com.smattme.democonsumer.responses.ProductsResponse;
+import feign.FeignException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,24 +33,34 @@ public class InventoryService {
 		Map<String, Object> finalResponse = new HashMap<>();
 
 		// get available products
-		GenericClientResponse<ProductsResponse> productsResponse = productClient.getProducts();
-		List<ProductResponse> products = productsResponse.getData().getProducts();
+		GenericClientResponse<ProductsResponse> productsResponse;
+		productsResponse = productClient.getProducts();
+
+		List<ProductResponse> products = productsResponse
+			.getData().getProducts();
 
 		// place order for the first product
 		Map<String, Object> orderRequest = new HashMap<>();
+
 		if (quantity > 0)
 			orderRequest.put("quantity", quantity);
-		orderRequest.put("product", products.get(0).getName());
+
+		var productName = products.get(0).getName();
+		orderRequest.put("product", productName);
 
 		try {
-			GenericClientResponse<Map<String, Object>> orderResponse = orderClient.placeOrder(orderRequest);
+
+			GenericClientResponse<Map<String, Object>> orderResponse;
+			orderResponse = orderClient.placeOrder(orderRequest);
 			finalResponse.put("orderResponseStatus", orderResponse.isStatus());
 			finalResponse.put("orderResponseCode", orderResponse.getCode());
 
 		} catch (CustomApplicationException ex) {
+
 			finalResponse.put("orderResponseCode", ex.getHttpStatus().value());
 			finalResponse.put("orderResponseMessage", ex.getMessage());
 			finalResponse.put("orderResponseErrors", ex.getErrors());
+
 		}
 
 		finalResponse.put("availableProducts", products);

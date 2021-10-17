@@ -1,14 +1,12 @@
 package com.smattme.democonsumer.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import feign.auth.BasicAuthRequestInterceptor;
+import feign.codec.ErrorDecoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import feign.auth.BasicAuthRequestInterceptor;
-import feign.codec.ErrorDecoder;
 
 public class BasicFeignClientConfig {
 

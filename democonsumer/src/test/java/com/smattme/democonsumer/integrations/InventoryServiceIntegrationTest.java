@@ -39,7 +39,7 @@ public class InventoryServiceIntegrationTest {
     }
 
     @Test
-    void whenMakePurchaseWithZeroQuantityAndCustomExHandling_thenFailedOrder() {
+    void makePurchaseWithZeroQuantityAndCustomExHandling_thenFailedOrder() {
 
         Map<String, Object> response = inventoryService.makePurchase(0);
         assertNotNull(response);
@@ -49,11 +49,14 @@ public class InventoryServiceIntegrationTest {
         List<ProductResponse> products = (List<ProductResponse>) productsObj;
         assertEquals(4, products.size());
 
-        // assert that we get a successful response status and code from the Order API
+        // assert that we get a successful response status
+        // and code from the Order API
+
         var orderResponseMessage = response.get("orderResponseMessage").toString();
         assertEquals("Missing required parameter(s)", orderResponseMessage);
 
-        int orderResponseCode = Integer.parseInt(response.get("orderResponseCode").toString());
+        var responseStr = response.get("orderResponseCode").toString();
+        int orderResponseCode = Integer.parseInt(responseStr);
         assertEquals(400, orderResponseCode);
 
         List<String> errors = (List<String>) response.get("orderResponseErrors");
