@@ -21,11 +21,11 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Base64;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 public class DecryptingFeignClient extends Default {
 
 	private String aesSecret;
-	private static final Logger logger = LoggerFactory.getLogger(DecryptingFeignClient.class);
-	
 
     public DecryptingFeignClient(SSLSocketFactory sslContextFactory,
 		HostnameVerifier hostnameVerifier, String aesSecret) {
@@ -43,15 +43,17 @@ public class DecryptingFeignClient extends Default {
         InputStream bodyStream = response.body().asInputStream();
 
         // copy the input stream to a String
-        String responseBody = StreamUtils.copyToString(bodyStream, StandardCharsets.UTF_8);
+        String responseBody = StreamUtils.copyToString(bodyStream, UTF_8);
 
         // decrypt the responseBody using AES algorithm and shared secret
         String decryptedBody = decryptDataAES(responseBody, aesSecret.getBytes());
 
         // reconstruct a new response from the original one
         // changing only the status code
-        return response.toBuilder().status(response.status()).headers(response.headers())
-                .body(decryptedBody, StandardCharsets.UTF_8) // set the new body
+        return response.toBuilder()
+                .status(response.status())
+                .headers(response.headers())
+                .body(decryptedBody, UTF_8) // set the new body
                 .build();
 
     }
@@ -65,7 +67,8 @@ public class DecryptingFeignClient extends Default {
             Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
 
             var encryptedBase64Bytes = encryptedDataInBase64.getBytes();
-            byte[] encryptedDataBytes = Base64.getDecoder().decode(encryptedBase64Bytes);
+            Base64.Decoder decoder = Base64.getDecoder();
+            byte[] encryptedDataBytes = decoder.decode(encryptedBase64Bytes);
 
             // remember we stored the iv as the first 12 bytes while encrypting
             byte[] iv = Arrays.copyOfRange(encryptedDataBytes, 0, 12);
@@ -75,12 +78,12 @@ public class DecryptingFeignClient extends Default {
 
             // use everything from 12 bytes on as cipher text
             int length = encryptedDataBytes.length;
-            byte[] plainText = cipher.doFinal(Arrays.copyOfRange(encryptedDataBytes, 12, length));
+            byte[] bytes = Arrays.copyOfRange(encryptedDataBytes, 12, length);
+            byte[] plainText = cipher.doFinal(bytes);
 
             return new String(plainText);
 
         } catch (Exception e) {
-            logger.error("Exception while decrypting AES: " + e.getMessage(), e);
             throw new CustomApplicationException(e.getMessage());
         }
     }

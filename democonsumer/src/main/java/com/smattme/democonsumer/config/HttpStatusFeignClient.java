@@ -17,30 +17,33 @@ import feign.Request;
 import feign.Request.Options;
 import feign.Response;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 public class HttpStatusFeignClient extends Default {
 
-	/**
-	 * Null parameters will trigger using platform defaults
-	 * 
-	 * @param sslContextFactory
-	 * @param hostnameVerifier
-	 */
-	public HttpStatusFeignClient(SSLSocketFactory sslContextFactory, HostnameVerifier hostnameVerifier) {
+
+	public HttpStatusFeignClient(SSLSocketFactory sslContextFactory,
+		HostnameVerifier hostnameVerifier) {
+
 		super(sslContextFactory, hostnameVerifier);
+
 	}
 
 	@Override
-	public Response execute(Request request, Options options) throws IOException {
+	public Response execute(Request request,
+		Options options) throws IOException {
 
 		Response response = super.execute(request, options);
 
 		// assert the original HTT status is 200 for test and learning purposes
-		Assert.isTrue(response.status() == 200, "Original HTTP status is not 200");
+		var assertMsg = "Original HTTP status is not 200";
+		Assert.isTrue(response.status() == 200, assertMsg);
 
-		InputStream bodyStream = response.body().asInputStream();
+		InputStream bodyStream = response.body()
+			.asInputStream();
 
 		// copy the input stream to a String
-		String responseBody = StreamUtils.copyToString(bodyStream, StandardCharsets.UTF_8);
+		String responseBody = StreamUtils.copyToString(bodyStream, UTF_8);
 
 		// expected response format
 		// {"code":200,"message":"Refund request submitted successfully","status":true,
@@ -52,7 +55,7 @@ public class HttpStatusFeignClient extends Default {
 		// changing only the status code
 		return response.toBuilder().status(actualStatusCode)
 				.headers(response.headers()) // re-use the original response headers
-				.body(responseBody, StandardCharsets.UTF_8) // set the body
+				.body(responseBody, UTF_8) // set the body
 				.build();
 
 	}
