@@ -26,7 +26,9 @@ public class RefundService {
 		refundRequest.put("customerId", "customer123");
 		refundRequest.put("product", "shoe");
 		refundRequest.put("reason", "Shoe size does not fit as expected");
-		GenericClientResponse<Map<String, Object>> response = refundClient.submitRefund(refundRequest);
+
+		GenericClientResponse<Map<String, Object>> response;
+		response = refundClient.submitRefund(refundRequest);
 
 		Map<String, Object> finalResponse = new HashMap<>();
 		finalResponse.put("code", response.getCode());

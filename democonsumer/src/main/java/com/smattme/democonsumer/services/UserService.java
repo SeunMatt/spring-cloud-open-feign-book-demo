@@ -27,7 +27,8 @@ public class UserService {
 		smsRequest.put("message", "Dear User, your OTP is 1234");
 		smsRequest.put("sender", "DemoApp");
 
-		GenericClientResponse<Map<String, Object>> smsResponse = smsClient.sendSMS(smsRequest);
+		GenericClientResponse<Map<String, Object>> smsResponse;
+		smsResponse = smsClient.sendSMS(smsRequest);
 
 		Map<String, Object> finalResponse = new HashMap<>();
 		finalResponse.put("code", smsResponse.getCode());

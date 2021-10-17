@@ -21,7 +21,8 @@ public class UserRegistrationServiceIntegrationTest {
 	void givenUserEmail_whenRegisterNewUser_thenSendEmailSuccessfully() {
 
 		var email = "hello@example.com";
-		Map<String, Object> response = userRegistrationService.registerNewUser(email);
+		Map<String, Object> response;
+		response = userRegistrationService.registerNewUser(email);
 
 		var statusStr = response.get("status").toString();
 		boolean status = Boolean.parseBoolean(statusStr);

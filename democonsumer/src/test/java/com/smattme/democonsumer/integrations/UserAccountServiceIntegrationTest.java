@@ -22,7 +22,9 @@ public class UserAccountServiceIntegrationTest {
 
 		String accountId = "0123456789";
 		int amount = 1000;
-		Map<String, Object> response = userAccountService.debitCustomer(accountId, amount);
+
+		Map<String, Object> response;
+		response = userAccountService.debitCustomer(accountId, amount);
 
 		var statusStr = response.get("status").toString();
 		boolean status = Boolean.parseBoolean(statusStr);

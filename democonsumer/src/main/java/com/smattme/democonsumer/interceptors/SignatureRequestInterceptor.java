@@ -5,8 +5,9 @@ import feign.RequestTemplate;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
-import java.nio.charset.StandardCharsets;
 import java.util.Base64;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class SignatureRequestInterceptor implements RequestInterceptor {
 
@@ -23,7 +24,7 @@ public class SignatureRequestInterceptor implements RequestInterceptor {
 
 		// read the raw request body if it's available
 		String requestBody = (template.body() != null && template.body().length > 0)
-				? new String(template.body(), StandardCharsets.UTF_8)
+				? new String(template.body(), UTF_8)
 				: "";
 
 		// generate a timestamp
@@ -32,32 +33,38 @@ public class SignatureRequestInterceptor implements RequestInterceptor {
 		// build the signature body
 		String signatureBody = template.path() + requestBody + timestamp;
 
-		try {
 
-			// compute the signature
-			String signature = generateHMACSHA256Signature(signatureBody, secret);
+		// compute the signature
+		String signature = generateHMACSHA256Signature(signatureBody, secret);
 
-			// add the clientId, signature and timestamp to the request header
-			template.header("timestamp", String.valueOf(timestamp));
-			template.header("signature", signature);
-			template.header("clientId", clientId);
+		// add the clientId, signature and timestamp to the request header
+		template.header("timestamp", String.valueOf(timestamp));
+		template.header("signature", signature);
+		template.header("clientId", clientId);
 
-		} catch (Exception ex) {
-			throw new RuntimeException(ex);
-		}
+
 	}
 
-	private String generateHMACSHA256Signature(String message, String secret) throws Exception {
-		var algo = "HmacSHA256";
-		Mac hmacSHA256 = Mac.getInstance(algo);
+	private String generateHMACSHA256Signature(String message, String secret) {
 
-		byte[] secretBytes = secret.getBytes();
-		SecretKeySpec secretKeySpec = new SecretKeySpec(secretBytes, algo);
-		hmacSHA256.init(secretKeySpec);
+		try {
+			var algo = "HmacSHA256";
+			Mac hmacSHA256;
+			hmacSHA256 = Mac.getInstance(algo);
 
-		byte[] signatureBytes = hmacSHA256.doFinal(message.getBytes());
+			byte[] secretBytes = secret.getBytes();
+			SecretKeySpec secretKeySpec;
+			secretKeySpec = new SecretKeySpec(secretBytes, algo);
 
-		return Base64.getEncoder().encodeToString(signatureBytes);
+			hmacSHA256.init(secretKeySpec);
+
+			byte[] signatureBytes = hmacSHA256.doFinal(message.getBytes());
+
+			return Base64.getEncoder().encodeToString(signatureBytes);
+
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 }
